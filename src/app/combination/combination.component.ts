@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject, combineLatest, concat, forkJoin, interval, merge, of, pipe, take, takeUntil, withLatestFrom, zip } from 'rxjs';
+import { BaseComponent } from '../base.component';
 
 
 @Component({
@@ -7,9 +8,8 @@ import { Observable, Subject, combineLatest, concat, forkJoin, interval, merge, 
   templateUrl: './combination.component.html',
   styleUrls: ['./combination.component.scss']
 })
-export class CombinationComponent {
-  private unsubscribeSubject = new Subject<void>();
-  public unsubscribe$: Observable<any> = this.unsubscribeSubject.asObservable();
+export class CombinationComponent extends BaseComponent {
+
 
 
   ngOnInit(): void {
@@ -101,15 +101,5 @@ export class CombinationComponent {
     forkJoin([observable1, observable2]).subscribe(values => {
       console.log(values);
     });
-  }
-
-  unSubscribe(): void {
-    console.log('stop observable');
-    this.unsubscribeSubject.next();
-    this.unsubscribeSubject.complete();
-  }
-
-  ngOnDestroy(): void {
-    this.unSubscribe();
   }
 }
